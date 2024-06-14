@@ -1,7 +1,5 @@
 .*cache
-.type-coverage
-.yarn/*
-!.yarn/plugins
-lib
+dist
 node_modules
 *.log
+*legacy*
