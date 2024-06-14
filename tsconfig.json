@@ -1,0 +1,7 @@
+{
+	// https://github.com/privatenumber/pkgroll/issues/36
+	// we can't pass a specific 'tsconfig' to pkgroll
+	// this one has to be used to build the dist files
+	"extends": "./tsconfig.base.json",
+	"include": ["src/**/*"]
+}
