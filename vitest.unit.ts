@@ -4,9 +4,14 @@ console.log('Initiating %o tests ...', 'unit');
 
 export default defineConfig({
 	test: {
+		root: './test/unit',
 		globals: true,
-		include: ['./test/unit/**/*.test.ts'],
+		// setupFiles: 'vitest.setup.ts',
+		include: ['**/*.test.ts'],
 		exclude: [...configDefaults.exclude],
-		environment: 'node'
+		environment: 'node',
+		alias: {
+
+		}
 	}
 });

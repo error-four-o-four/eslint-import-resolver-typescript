@@ -10,7 +10,7 @@ export default defineConfig({
 			forks: {}
 		},
 		globals: true,
-		globalSetup: 'vitest.setup.ts',
+		globalSetup: 'vitest.global.ts',
 		include: ['**/*.test.ts'],
 		exclude: [...configDefaults.exclude],
 		environment: 'node'
