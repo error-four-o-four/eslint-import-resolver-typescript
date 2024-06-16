@@ -2,6 +2,24 @@
 	"extends" : "../tsconfig.base.json",
 	"compilerOptions": {
 		"types": ["node", "vitest"],
+		"baseUrl": "./",
+		"paths": {
+			"package.json": ["../package.json"],
+			"core/*": ["../src/core/*"],
+			"utils/*": ["../src/utils/*"],
+			"e2e/*": ["../test/e2e/*"],
+			"unit/*": ["../test/unit/*"]
+		}
 	},
-	"include": ["e2e", "unit", "**/vitest.*.ts", "fixtures/e2e/eslint.config.js"]
+	"include": [
+		"./",
+		// "test/fixtures/eslint.base.js",
+		"**/vitest.*.ts",
+	],
+	"exclude": [
+		"node_modules",
+		"**/node_modules",
+		"dist",
+		"test/fixtures"
+	]
 }

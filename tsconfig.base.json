@@ -15,15 +15,5 @@
 		"importHelpers": true,
 		"noEmit": true,
 		"emitDeclarationOnly": false,
-
-		"paths": {
-			"src": ["./src"],
-			"src/package.json": ["./src/package.json"],
-			"src/*": ["./src/*"],
-			"core/*": ["./src/core/*"],
-			"utils/*": ["./src/utils/*"],
-			"types/*": ["./src/types/*"],
-		},
 	},
-	"exclude": ["node_modules", "**/node_modules"]
 }

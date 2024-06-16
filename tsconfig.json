@@ -3,5 +3,21 @@
 	// we can't pass a specific 'tsconfig' to pkgroll
 	// this one has to be used to build the dist files
 	"extends": "./tsconfig.base.json",
-	"include": ["src/**/*"]
+	"compilerOptions": {
+		// move paths to base?
+		"paths": {
+			"src": ["./src"],
+			"package.json": ["./package.json"],
+			"core/*": ["./src/core/*"],
+			"utils/*": ["./src/utils/*"],
+		},
+	},
+	"include": ["src/**/*"],
+	"exclude": [
+		"node_modules",
+		"**/node_modules",
+		"src/**/*.test.ts",
+		"test",
+		"dist"
+	]
 }

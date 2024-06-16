@@ -1,6 +1,6 @@
 import debug from "debug";
 
-import { name } from '../../package.json';
+import { name } from 'package.json';
 
 const log = debug(name);
 

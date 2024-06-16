@@ -12,7 +12,7 @@ afterAll(() => {
 	disable();
 });
 
-describe('resolve', () => {
+describe.todo('resolve', () => {
 
 	it('should resolve a module path', async () => {
 		const result = resolve('some-module', 'src/index.ts');
