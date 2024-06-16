@@ -37,32 +37,31 @@
     "test:unit": "vitest --config vitest.unit.ts"
   },
   "peerDependencies": {
-    "eslint": "*",
-    "eslint-plugin-import-x": "*"
+    "eslint": "*"
   },
   "dependencies": {
     "@types/debug": "^4.1.12",
     "@types/eslint": "^8.56.10",
-    "@types/is-core-module": "^2.2.2",
-    "@types/is-glob": "^4.0.4",
+    "@types/node": "^20.14.2",
     "debug": "^4.3.5",
     "enhanced-resolve": "^5.17.0",
+    "eslint-plugin-import-x": "^0.5.1",
     "fast-glob": "^3.3.2",
     "get-tsconfig": "^4.7.5",
     "is-core-module": "^2.13.1",
-    "is-glob": "^4.0.3",
-    "type-fest": "^4.20.0"
+    "is-glob": "^4.0.3"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.0",
     "@tsconfig/node18": "^18.2.4",
-    "@types/node": "^20.14.2",
+    "@types/is-core-module": "^2.2.2",
+    "@types/is-glob": "^4.0.4",
     "cross-env": "^7.0.3",
     "eslint": "^9.4.0",
     "eslint-import-resolver-typescript": "file:.",
-    "eslint-plugin-import-x": "^0.5.1",
     "pkgroll": "^2.1.1",
     "tsx": "^4.15.4",
+    "type-fest": "^4.20.1",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.30",
     "vitest": "^1.6.0"
