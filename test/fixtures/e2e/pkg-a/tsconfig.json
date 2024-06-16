@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig/custom/tsconfig.basic-esnext.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+  },
+}

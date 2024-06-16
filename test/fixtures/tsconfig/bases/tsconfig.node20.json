@@ -1,0 +1,5 @@
+// https://github.com/tsconfig/bases/blob/main/bases/node20.json
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/node20/tsconfig.json",
+}

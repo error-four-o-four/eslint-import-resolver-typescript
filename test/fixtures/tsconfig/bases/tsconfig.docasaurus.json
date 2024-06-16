@@ -1,0 +1,5 @@
+// https://github.com/tsconfig/bases/blob/main/bases/docusaurus.json
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/docasaurus/tsconfig.json",
+}

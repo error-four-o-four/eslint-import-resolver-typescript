@@ -1,0 +1,5 @@
+// https://github.com/tsconfig/bases/blob/main/bases/nuxt.json
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@tsconfig/nuxt/tsconfig.json",
+}
