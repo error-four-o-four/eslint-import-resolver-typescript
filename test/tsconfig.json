@@ -1,7 +1,6 @@
 {
 	"extends" : "../tsconfig.base.json",
 	"compilerOptions": {
-		"baseUrl": "./",
 		"types": ["node", "vitest"],
 	},
 	"include": ["e2e", "unit", "**/vitest.*.ts", "fixtures/e2e/eslint.config.js"]

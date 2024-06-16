@@ -9,13 +9,21 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
 		"resolveJsonModule": true,
-    "moduleResolution": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"allowImportingTsExtensions": true,
 
+		"importHelpers": true,
 		"noEmit": true,
 		"emitDeclarationOnly": false,
-		"importHelpers": true,
-		"allowImportingTsExtensions": true,
-		"types": ["node"],
+
+		"paths": {
+			"src": ["./src"],
+			"src/package.json": ["./src/package.json"],
+			"src/*": ["./src/*"],
+			"core/*": ["./src/core/*"],
+			"utils/*": ["./src/utils/*"],
+			"types/*": ["./src/types/*"],
+		},
 	},
 	"exclude": ["node_modules", "**/node_modules"]
 }
