@@ -3,8 +3,6 @@ import { parser } from 'typescript-eslint';
 
 import pluginImportX from 'eslint-plugin-import-x';
 
-// console.log('eslint cwd: %o', process.cwd());
-
 /** @type {import('@eslint/compat').FlatConfig} */
 const config = {
 	name: 'test',

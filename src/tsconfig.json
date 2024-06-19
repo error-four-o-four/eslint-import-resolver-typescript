@@ -1,0 +1,17 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"package.json": ["../package.json"],
+			"core/*": ["../src/core/*"],
+			"utils/*": ["../src/utils/*"],
+			"e2e/*": ["../test/e2e/*"],
+			"unit/*": ["../test/unit/*"]
+		},
+		"noEmit": true
+	},
+	"include": [
+		"./",
+	],
+}

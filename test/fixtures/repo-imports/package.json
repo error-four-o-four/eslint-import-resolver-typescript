@@ -1,0 +1,7 @@
+{
+  "name": "repo-imports",
+  "private": true,
+  "imports": {
+    "#test": "../../../src/utils/path.ts"
+  }
+}
