@@ -1,23 +1,25 @@
 {
 	// https://github.com/privatenumber/pkgroll/issues/36
 	// we can't pass a specific 'tsconfig' to pkgroll
-	// this one has to be used to build the dist files
+	// this one has to be used to bundle and build
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		// move paths to base?
-		"paths": {
-			"src": ["./src"],
-			"package.json": ["./package.json"],
-			"core/*": ["./src/core/*"],
-			"utils/*": ["./src/utils/*"],
-		},
+		"module": "NodeNext",
+
+		"noEmit": true,
+		"emitDeclarationOnly": false,
+		"allowImportingTsExtensions": true,
+
+		"baseUrl": "./",
+		// https://github.com/privatenumber/pkgroll/issues/48
+		// "paths": { }
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*.ts"],
 	"exclude": [
 		"node_modules",
 		"**/node_modules",
 		"src/**/*.test.ts",
 		"test",
 		"dist"
-	]
+	],
 }

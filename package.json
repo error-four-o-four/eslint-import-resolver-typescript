@@ -33,8 +33,8 @@
     "lint:tsc": "tsc -p tsconfig.json --noEmit",
     "dev": "pkgroll --watch --export-condition=node",
     "build": "pkgroll --clean-dist --export-condition=node",
-    "test:e2e": "vitest --config vitest.e2e.ts",
-    "test:unit": "vitest --config vitest.unit.ts"
+    "test:e2e": "vitest --config test/vitest.config.e2e.ts",
+    "test:unit": "vitest --config test/vitest.config.unit.ts"
   },
   "peerDependencies": {
     "eslint": "*"
@@ -42,6 +42,8 @@
   "dependencies": {
     "@types/debug": "^4.1.12",
     "@types/eslint": "^8.56.10",
+    "@types/is-core-module": "^2.2.2",
+    "@types/is-glob": "^4.0.4",
     "@types/node": "^20.14.2",
     "debug": "^4.3.5",
     "enhanced-resolve": "^5.17.0",
@@ -67,8 +69,6 @@
     "@tsconfig/nuxt": "^2.0.3",
     "@tsconfig/react-native": "^3.0.5",
     "@tsconfig/vite-react": "^3.0.2",
-    "@types/is-core-module": "^2.2.2",
-    "@types/is-glob": "^4.0.4",
     "eslint": "^9.4.0",
     "eslint-import-resolver-typescript": "file:.",
     "pkgroll": "^2.1.1",
@@ -76,6 +76,7 @@
     "type-fest": "^4.20.1",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.0.0-alpha.30",
+    "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.0"
   }
 }

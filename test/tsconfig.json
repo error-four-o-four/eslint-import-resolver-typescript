@@ -1,25 +1,21 @@
 {
-	"extends" : "../tsconfig.base.json",
+	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
-		"types": ["node", "vitest"],
+		"noEmit": true,
+
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"allowImportingTsExtensions": true,
+
 		"baseUrl": "./",
 		"paths": {
-			"package.json": ["../package.json"],
-			"core/*": ["../src/core/*"],
-			"utils/*": ["../src/utils/*"],
-			"e2e/*": ["../test/e2e/*"],
-			"unit/*": ["../test/unit/*"]
-		}
+			"@src/*": ["../src/*"],
+			"@e2e/*": ["e2e/*"],
+			"@unit/*": ["unit/*"],
+			"@utils/*": ["utils/*"],
+		},
+		"types": ["node", "vitest"],
 	},
-	"include": [
-		"./",
-		// "test/fixtures/eslint.base.js",
-		"**/vitest.*.ts",
-	],
-	"exclude": [
-		"node_modules",
-		"**/node_modules",
-		"dist",
-		"test/fixtures"
-	]
+	"include": ["**/*.ts"],
+	"exclude": ["./fixtures"]
 }

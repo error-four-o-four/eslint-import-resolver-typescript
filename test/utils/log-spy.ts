@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, vi } from 'vitest';
 
-import * as logger from 'utils/log.ts';
+import * as logger from '@src/utils/log.ts';
 
 const spy = vi.spyOn(logger, 'log').mockImplementation(() => { /* void */ });
 

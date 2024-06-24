@@ -3,21 +3,24 @@ import { resolve } from 'node:path';
 import type { GlobalSetupContext } from 'vitest/node';
 
 const ROOT_PATH = process.cwd();
-const CWD_PATH = resolve(ROOT_PATH, './test/e2e');
-const FXT_PATH = resolve(ROOT_PATH, './test/fixtures/e2e');
+const UNIT_PATH = resolve(ROOT_PATH, './test/unit');
+const E2E_PATH = resolve(ROOT_PATH, './test/e2e');
+const FXT_PATH = resolve(ROOT_PATH, './test/fixtures');
 
-process.chdir(CWD_PATH);
+// console.log(process.cwd() === ROOT_PATH); // true
 
 export default function (context: GlobalSetupContext) {
 	context.provide('ROOT_PATH', ROOT_PATH);
-	context.provide('CWD_PATH', CWD_PATH);
+	context.provide('UNIT_PATH', UNIT_PATH);
+	context.provide('E2E_PATH', E2E_PATH);
 	context.provide('FXT_PATH', FXT_PATH);
 }
 
 declare module 'vitest' {
 	export interface ProvidedContext {
 		ROOT_PATH: string;
-		CWD_PATH: string;
+		UNIT_PATH: string;
+		E2E_PATH: string;
 		FXT_PATH: string;
 	}
 }

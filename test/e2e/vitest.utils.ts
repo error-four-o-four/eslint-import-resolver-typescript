@@ -1,27 +1,20 @@
-import { platform } from 'node:os';
-import { resolve, sep } from 'node:path';
+import { sep } from 'node:path';
 
 import { inject } from "vitest";
 import { ESLint } from "eslint";
 
-const isWin32 = platform() === 'win32';
-
-const slash = (filePath: string) => isWin32 ? filePath.replaceAll(sep, '/') : filePath;
-
-const cwd = inject('FXT_PATH');
-const root = inject('ROOT_PATH');
+// const isWin32 = process.platform === 'win32';
+// const root = inject('ROOT_PATH');
+const slash = (input: string) => process.platform === 'win32' ? input.replaceAll(sep, '/') : input;
+const removeRoot = (input: string) => slash(input.replace(inject('ROOT_PATH'), ''));
 
 const defaultParams: LintParams = {
-	// relative to test/fixtures/e2e
-	config: 'eslint.config.js',
+	config: 'eslint.base.js',
 	files: ['**/*.ts']
 };
 
-const removeRoot = (input: string) => slash(input.replace(root, ''));
-
 export async function getLintResult(params = defaultParams): Promise<ESLint.LintResult[]> {
-	process.chdir(resolve(cwd));
-	console.log('Loading config %o at %o', params.config, removeRoot(cwd));
+	console.log('Loading config %o at %o', params.config, removeRoot(process.cwd()));
 
 	const eslint = new ESLint({
 		fix: false,

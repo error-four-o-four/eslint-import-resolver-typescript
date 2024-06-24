@@ -1,16 +1,28 @@
 import { beforeAll, expect, it } from 'vitest';
 
+import { changeCwdTo } from '@utils/cwd.ts';
+
 import {
-	type LintResult,
 	getLintResult,
 	logLintResult,
 	logLintResultMessages
 } from './vitest.utils.ts';
 
+import type {
+	LintParams,
+	LintResult
+} from './vitest.utils.ts';
+
 let result: LintResult;
 
 beforeAll(async () => {
-	result = await getLintResult();
+	changeCwdTo('fixtures');
+	const params: LintParams = {
+		config: './eslint.base.js',
+		files: ['./repo-basic/**/*.ts']
+	};
+
+	result = await getLintResult(params);
 	logLintResult(result);
 	logLintResultMessages(result);
 });

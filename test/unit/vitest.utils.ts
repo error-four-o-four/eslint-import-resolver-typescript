@@ -2,15 +2,14 @@ import { expect } from 'vitest';
 
 import type { UnknownRecord } from 'type-fest';
 
-import { defaults } from 'core/options/defaults.ts';
+import { defaults } from '@src/core/options/defaults.ts';
 
-import type { ValidOptions } from 'core/options/types.ts';
+import type { DefaultOptions } from '@src/core/options/types.ts';
 
-export const yellow = (s: string) => `\u001b[33m${s}\u001b[0m`;
 
 // #####
 
-const expectedKeys = Object.keys(defaults) as (keyof ValidOptions)[];
+const expectedKeys = Object.keys(defaults) as (keyof DefaultOptions)[];
 
 export function expectDefaultOptions(result: UnknownRecord) {
 	expectedKeys.forEach(key => {
