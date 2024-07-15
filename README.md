@@ -97,6 +97,8 @@ Add the following to your `.eslintrc` config:
 ```
 -->
 
+<!--
+
 ## Options from [`enhanced-resolve`][]
 
 | `mainFields` | `conditionNames` | `extensions` | `extensionAlias`                         |
@@ -108,6 +110,8 @@ Add the following to your `.eslintrc` config:
 | "exports"   |  "node-addons"   |  ".jsx"       |                                          |
 |             |  "browser"       |  ".json"      |                                          |
 |             |  "default"       |  ".node"      |                                          |
+
+-->
 
 <!--
 conditionNames, mainFields
