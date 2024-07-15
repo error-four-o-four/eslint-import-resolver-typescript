@@ -1,6 +1,7 @@
 .*cache
 dist
 node_modules
+!test/fixtures/**/node_modules
 *.log
 *legacy*
 *tmp*

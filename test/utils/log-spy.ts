@@ -1,18 +1,19 @@
 import { afterAll, beforeAll, vi } from 'vitest';
 
-import * as logger from '@src/utils/log.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { enable, disable } from 'utils/log/utils.ts';
 
-const spy = vi.spyOn(logger, 'log').mockImplementation(() => { /* void */ });
+const spy = vi.spyOn(loggers, 'main').mockImplementation(() => { /* void */ });
 
 const enableLoggerBeforeAll = () => {
 	beforeAll(() => {
-		logger.enable();
+		enable();
 	});
 };
 
 const disableLoggerAfterAll = () => {
 	afterAll(() => {
-		logger.disable();
+		disable();
 	});
 };
 
@@ -22,8 +23,8 @@ const clearLoggerMocksAfterEach = () => {
 
 export default {
 	spy,
-	enable: logger.enable,
-	disable: logger.disable,
+	enable,
+	disable,
 	enableLoggerBeforeAll,
 	disableLoggerAfterAll,
 	clearLoggerMocksAfterEach

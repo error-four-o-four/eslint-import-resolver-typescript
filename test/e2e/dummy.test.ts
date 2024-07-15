@@ -17,6 +17,7 @@ let result: LintResult;
 
 beforeAll(async () => {
 	changeCwdTo('fixtures');
+
 	const params: LintParams = {
 		config: './eslint.base.js',
 		files: ['./repo-basic/**/*.ts']

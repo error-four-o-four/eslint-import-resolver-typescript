@@ -2,20 +2,18 @@
 	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
 		"noEmit": true,
-
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"allowImportingTsExtensions": true,
 
-		"baseUrl": "./",
+		"baseUrl": "../src",
 		"paths": {
-			"@src/*": ["../src/*"],
-			"@e2e/*": ["e2e/*"],
-			"@unit/*": ["unit/*"],
-			"@utils/*": ["utils/*"],
+			"@e2e/*": ["../test/e2e/*"],
+			"@unit/*": ["../test/unit/*"],
+			"@utils/*": ["../test/utils/*"],
 		},
 		"types": ["node", "vitest"],
 	},
-	"include": ["**/*.ts"],
-	"exclude": ["./fixtures"]
+	"include": ["**/*.ts", "../src/**/*.ts"],
+	"exclude": ["../fixtures"]
 }
