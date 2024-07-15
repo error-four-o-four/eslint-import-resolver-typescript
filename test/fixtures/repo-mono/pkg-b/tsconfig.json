@@ -1,0 +1,11 @@
+{
+	"extends": "../../tsconfig/node16/tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"@pkg-a" : ["../pkg-a/src"],
+			"@pkg-a/*": ["../pkg-a/src/*"]
+		}
+	},
+	"include": ["./src"],
+}

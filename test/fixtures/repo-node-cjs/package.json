@@ -1,4 +1,5 @@
 {
   "name": "repo-node-cjs",
+  "type": "commonjs",
   "private": true
 }

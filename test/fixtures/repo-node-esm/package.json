@@ -1,4 +1,5 @@
 {
   "name": "repo-node-esm",
+  "type": "module",
   "private": true
 }

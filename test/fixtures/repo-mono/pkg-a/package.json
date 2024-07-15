@@ -1,4 +1,7 @@
 {
   "name": "repo-mono-pkg-a",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "module-b": "0.0.1"
+  }
 }
