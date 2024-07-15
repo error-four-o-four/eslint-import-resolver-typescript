@@ -1,55 +1,80 @@
 import isCoreModule from 'is-core-module';
 
-import {
-	removeAfter,
-	normAbsolute,
-	resolveNormed
-} from 'utils/path.ts';
+import { loggers } from './utils/log/loggers.ts';
+import { replaceCwd } from './utils/log/utils.ts';
+import { colors } from './utils/log/colors.ts';
+import { hasTypescriptExt, removeAfter } from './utils/path/main.ts';
 
-import { log } from 'utils/log.ts';
-
-import { validateUserOptions } from 'core/options/validator.ts';
-
-import type { ResolveOptions, ResolvedResult } from './types.ts';
-
-export {
-	conditionNames,
-	extensions,
-	extensionAlias,
-	mainFields
-} from './core/options/resolve.ts';
+import { applyUserOptions } from './handlers/index.ts';
+import { getResolvedPaths } from './core/index.ts';
+import type { ResolverOptions } from './handlers/options/types.ts';
+import type { ResolvedResult } from './core/types.ts';
 
 export const interfaceVersion = 2;
 
+/**
+ * @param modulePath the requested module path
+ * @param sourceFile the absolute path of the source file
+ * @param userOptions
+ * @returns
+ */
 export function resolve(
 	modulePath: string,
 	sourceFile: string,
-	userOptions?: ResolveOptions | null,
+	userOptions: ResolverOptions | true,
 ): ResolvedResult {
-	const request = removeAfter(modulePath, '?');
-	log('Resolving %o in %o ...', modulePath, sourceFile);
+	let request = removeAfter(modulePath, '?');
+
+	loggers.main(
+		'Attempting to resolve %o ...\n... in source file %o ...',
+		modulePath,
+		replaceCwd(sourceFile)
+	);
 
 	if (isCoreModule(request)) {
-		log('Which is a core module. ✅', request);
+		loggers.main(`... ${colors.yellow('resolved')} module path as a core module`);
+
 		return {
 			found: true,
 			path: null
 		};
 	}
 
-	const validOptions = validateUserOptions(userOptions);
-	log('With options %O', validOptions);
+	applyUserOptions(userOptions);
 
-	const cwd = normAbsolute(process.cwd());
-	const requestor = resolveNormed(cwd, sourceFile);
+	const paths = getResolvedPaths(sourceFile, request);
+	const path = paths.find(item => hasTypescriptExt(item)) ?? paths[0];
 
-	console.log(requestor);
+	if (path) {
+		loggers.main(
+			`... ${colors.yellow('resolved')} module path to %o`,
+			replaceCwd(path)
+		);
 
-	log(requestor);
+		return {
+			found: true,
+			path
+		};
+	}
+
+	loggers.main(`... could ${colors.yellow('not')} resolve module path`);
 
 	return {
 		found: false
 	};
 }
 
-export type * from './types.ts';
+export type {
+	Resolver,
+	ResolvedResult,
+	ResultFound,
+	ResultNotFound,
+} from './core/types.ts';
+
+export type {
+	ResolverOptions
+} from './handlers/options/types.ts';
+
+export type {
+	FileExtension
+} from './utils/path/types.ts';

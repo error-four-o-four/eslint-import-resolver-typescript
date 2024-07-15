@@ -10,7 +10,8 @@
 		"emitDeclarationOnly": false,
 		"allowImportingTsExtensions": true,
 
-		"baseUrl": "./",
+		// pkgroll seems unable to handle bare module specifiers
+		"baseUrl": "./src",
 		// https://github.com/privatenumber/pkgroll/issues/48
 		// "paths": { }
 	},
@@ -18,7 +19,6 @@
 	"exclude": [
 		"node_modules",
 		"**/node_modules",
-		"src/**/*.test.ts",
 		"test",
 		"dist"
 	],

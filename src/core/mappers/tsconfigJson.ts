@@ -1,1 +1,0 @@
-import type { TsConfigJson } from 'type-fest';
