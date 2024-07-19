@@ -10,7 +10,10 @@ import { pkgFilename } from 'utils/path/constants.ts';
 import type { Cwd } from 'utils/path/types.ts';
 
 import { getOptions } from 'handlers/options/index.ts';
-import type { ExternalPkgResult, InternalPkgResult } from 'handlers/package/types.ts';
+import type {
+	ExternalPkgResult,
+	InternalPkgResult,
+} from 'handlers/package/types.ts';
 
 import * as utils from './utils.ts';
 
@@ -27,7 +30,9 @@ export class PackageHandler {
 		if (existsSync(rootPkgPath)) {
 			this.internal.set(cwd, utils.createInternalPkgJsonResult(cwd));
 		} else {
-			throw new Error(`Could not find '${pkgFilename}' at root level '${this.cwd}'`);
+			throw new Error(
+				`Could not find '${pkgFilename}' at root level '${this.cwd}'`,
+			);
 			/** @todo !!! get's stuck */
 			// loggers.warn(`Could not find '${pkgFile}' at root level '${this.cwd}'`);
 		}
@@ -57,7 +62,7 @@ export class PackageHandler {
 			// sourceFile is closer to cwd as pkg
 			if (rel.startsWith('..')) {
 				continue;
-			};
+			}
 
 			// sourceFile is nested
 			if (pkg.dirs.has(rel)) {
@@ -73,12 +78,12 @@ export class PackageHandler {
 		let pkg = this.matchInternalPkg(sourceFile);
 
 		// set current pkg to access properties later
-		if (pkg) return this.current = pkg;
+		if (pkg) return (this.current = pkg);
 
 		// search for closest pkg dir
 		loggers.debug(
 			`${colors.blueDark(PackageHandler.name)} is searching for corresponding %o`,
-			pkgFilename
+			pkgFilename,
 		);
 
 		/** @todo consider using path = dir/package.json instead of dir */
@@ -102,13 +107,12 @@ export class PackageHandler {
 
 		// pkg has been cached but not been matched with the current source file
 		// update internal pkg properties
-		utils.createMatchedDirs(pkgDir, sourceFile)
-			.forEach(dir => {
-				if (!pkg.dirs.has(dir)) pkg.dirs.add(dir);
-			});
+		utils.createMatchedDirs(pkgDir, sourceFile).forEach((dir) => {
+			if (!pkg.dirs.has(dir)) pkg.dirs.add(dir);
+		});
 
 		// set current pkg to access properties later
-		return this.current = pkg;
+		return (this.current = pkg);
 	}
 
 	/**
@@ -132,11 +136,13 @@ export class PackageHandler {
 		}
 
 		if (pkg.dir === this.cwd) {
-			loggers.info(`Could ${colors.yellow('not')} find any corresponding dependency`);
+			loggers.info(
+				`Could ${colors.yellow('not')} find any corresponding dependency`,
+			);
 			clearOnce('isDep');
 			this.current = null;
 			return;
-		};
+		}
 
 		this.searchExternalNameRecursive(dirname(pkg.dir), request);
 	}
@@ -145,9 +151,7 @@ export class PackageHandler {
 	 * Searches for `<modules>/@types/<dependency>/package.json`
 	 * and (!) `<modules>/<dependency>/package.json`
 	 */
-	public matchExternalPath(
-		request: string,
-	): string[] | null {
+	public matchExternalPath(request: string): string[] | null {
 		if (!this.current) {
 			/** @todo */
 			// this should never be the case
@@ -158,17 +162,13 @@ export class PackageHandler {
 		const { modules } = getOptions();
 		const dirs = findAllUp(modules, this.current.dir);
 
-
 		if (!dirs) {
-			loggers.warn(
-				`Could ${colors.yellow('not')} find any of: %o`,
-				modules
-			);
+			loggers.warn(`Could ${colors.yellow('not')} find any of: %o`, modules);
 			return null;
 		}
 
 		loggers.info(
-			`Found ${colors.yellow(`${dirs.length}`)} dependency folder${dirs.length === 1 ? '' : 's'}`
+			`Found ${colors.yellow(`${dirs.length}`)} dependency folder${dirs.length === 1 ? '' : 's'}`,
 		);
 
 		const paths = utils.getExternalPaths(request, dirs);
@@ -184,7 +184,7 @@ export class PackageHandler {
 		// 	);
 		// }
 
-		paths.forEach(item => {
+		paths.forEach((item) => {
 			this.external[item] = utils.createExternalPkgJsonResult(request, item);
 		});
 

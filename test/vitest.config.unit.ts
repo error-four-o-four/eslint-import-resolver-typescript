@@ -9,5 +9,5 @@ export default defineConfig({
 		...common.test,
 		include: ['test/unit/**/*.test.ts'],
 	},
-	plugins: common.plugins
+	plugins: common.plugins,
 });

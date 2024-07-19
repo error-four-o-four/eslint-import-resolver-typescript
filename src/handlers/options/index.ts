@@ -33,7 +33,7 @@ export function getOptions() {
 
 	/** @todo or throw */
 	loggers.warn(`Expected ${colors.yellow('user options')} to be defined!`);
-	const handler = cache[cwd] = new OptionsHandler(cwd);
+	const handler = (cache[cwd] = new OptionsHandler(cwd));
 	handler.apply(true);
 	return handler.values;
 }

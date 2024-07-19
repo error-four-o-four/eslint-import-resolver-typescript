@@ -4,7 +4,7 @@ import type {
 	FileMatcher,
 	TsConfigJson,
 	TsConfigJsonResolved,
-	TsConfigResult
+	TsConfigResult,
 } from 'get-tsconfig';
 
 import type { SetRequired } from 'type-fest';

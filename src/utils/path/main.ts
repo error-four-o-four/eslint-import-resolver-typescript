@@ -1,9 +1,4 @@
-import {
-	dirname,
-	parse,
-	relative,
-	resolve as nresolve
-} from 'node:path';
+import { dirname, parse, relative, resolve as nresolve } from 'node:path';
 
 import slash from 'slash';
 

@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import {
 	createFilesMatcher,
 	createPathsMatcher,
-	parseTsconfig
+	parseTsconfig,
 } from 'get-tsconfig';
 
 import { loggers } from 'utils/log/loggers.ts';
@@ -13,11 +13,7 @@ import { tscFilename } from 'utils/path/constants.ts';
 import type { Cwd } from 'utils/path/types.ts';
 
 import * as utils from './utils.ts';
-import type {
-	GetTsconfigResult,
-	TscFileMatcher,
-	TscResult
-} from './types.ts';
+import type { GetTsconfigResult, TscFileMatcher, TscResult } from './types.ts';
 
 export class TsconfigHandler {
 	// used internally by file matcher
@@ -40,7 +36,9 @@ export class TsconfigHandler {
 	private match(sourceFile: string): TscResult | null {
 		for (const tsc of this.files.values()) {
 			if (tsc.included.has(sourceFile)) {
-				loggers.debug(`${colors.blueDark(TsconfigHandler.name)} matched a cached source file`);
+				loggers.debug(
+					`${colors.blueDark(TsconfigHandler.name)} matched a cached source file`,
+				);
 				return tsc;
 			}
 		}
@@ -52,7 +50,9 @@ export class TsconfigHandler {
 				const tsc = this.files.get(path);
 
 				if (tsc) {
-					loggers.debug(`${colors.blueDark(TsconfigHandler.name)} matched a source file`);
+					loggers.debug(
+						`${colors.blueDark(TsconfigHandler.name)} matched a source file`,
+					);
 					tsc.included.add(sourceFile);
 					return tsc;
 				}
@@ -65,7 +65,7 @@ export class TsconfigHandler {
 	public get(sourceFile: string) {
 		loggers.debug(
 			`${colors.blueDark(TsconfigHandler.name)} is searching for %o`,
-			tscFilename
+			tscFilename,
 		);
 
 		let tsc = this.match(sourceFile);
@@ -84,14 +84,17 @@ export class TsconfigHandler {
 		const tscJson = parseTsconfig(tscPath);
 
 		this._files.set(tscPath, tscJson);
-		this.matchers.set(tscPath, createFilesMatcher({ path: tscPath, config: tscJson }));
+		this.matchers.set(
+			tscPath,
+			createFilesMatcher({ path: tscPath, config: tscJson }),
+		);
 
 		tsc = {
 			parsed: utils.createTscWithCompilerOptions(tscJson),
 			path: tscPath,
 			dir: tscDir,
 			included: new Set([sourceFile]),
-			mapper: createPathsMatcher({ path: tscPath, config: tscJson })
+			mapper: createPathsMatcher({ path: tscPath, config: tscJson }),
 		};
 
 		// loggers.debug(

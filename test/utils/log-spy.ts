@@ -28,5 +28,5 @@ export default {
 	disable,
 	enableLoggerBeforeAll,
 	disableLoggerAfterAll,
-	clearLoggerMocksAfterEach
+	clearLoggerMocksAfterEach,
 };

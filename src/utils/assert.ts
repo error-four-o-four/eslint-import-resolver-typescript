@@ -19,7 +19,7 @@ export function assertNonNullable(
 
 export function assertIsString(
 	value: unknown,
-	message: string = getExpectedMsg('a \'string\''),
+	message: string = getExpectedMsg("a 'string'"),
 ): asserts value is string {
 	if (typeof value !== 'string') {
 		throw new Error(message);
@@ -28,7 +28,7 @@ export function assertIsString(
 
 export function assertIsRecord(
 	value: unknown,
-	message: string = getExpectedMsg('a \'record\''),
+	message: string = getExpectedMsg("a 'record'"),
 ): asserts value is UnknownRecord {
 	assertNonNullable(value);
 
@@ -36,12 +36,13 @@ export function assertIsRecord(
 		throw new Error(message);
 	}
 
-	Object.keys(value as UnknownRecord)
-		.forEach((key) => assertIsString(key, `Expected key '${key}' in 'record' to be a 'string'`));
+	Object.keys(value as UnknownRecord).forEach((key) =>
+		assertIsString(key, `Expected key '${key}' in 'record' to be a 'string'`),
+	);
 }
 
 export function isNonNullable<T>(value: T): value is NonNullable<T> {
-	return (value !== null && value !== undefined);
+	return value !== null && value !== undefined;
 }
 
 export function isString(value: unknown): value is string {

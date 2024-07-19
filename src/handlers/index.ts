@@ -12,19 +12,13 @@ export const handler = {
 	pkg: {} as Record<Cwd, PackageHandler>,
 };
 
-function getHandler<T>(
-	key: keyof typeof handler
-) {
+function getHandler<T>(key: keyof typeof handler) {
 	const cwd = cwdHandler.get();
 
 	if (!handler[key].hasOwnProperty(cwd)) {
-		const Handler = key === 'pkg'
-			? PackageHandler
-			: TsconfigHandler;
+		const Handler = key === 'pkg' ? PackageHandler : TsconfigHandler;
 
-		loggers.debug(
-			`Instantiated ${colors.blueDark(Handler.name)}`
-		);
+		loggers.debug(`Instantiated ${colors.blueDark(Handler.name)}`);
 
 		handler[key][cwd] = new Handler(cwd);
 	}

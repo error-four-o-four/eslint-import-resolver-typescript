@@ -17,5 +17,5 @@ export const EXT = {
 	MJS: '.mjs',
 	CJS: '.cjs',
 	JSON: '.json',
-	NODE: '.node'
+	NODE: '.node',
 } as const;

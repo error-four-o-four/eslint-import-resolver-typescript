@@ -1,6 +1,9 @@
 import { isString, isUnknownRecord } from 'utils/assert.ts';
 import type { Cwd } from 'utils/path/types.ts';
-import type { InternalOptions, ResolverOptions } from 'handlers/options/types.ts';
+import type {
+	InternalOptions,
+	ResolverOptions,
+} from 'handlers/options/types.ts';
 
 import { defaults } from './utils.ts';
 
@@ -24,19 +27,17 @@ export class OptionsHandler {
 		const options: Record<string, any> = {};
 
 		if (isUnknownRecord(userOptions)) {
-			(['modules', 'extensions'] as (keyof ResolverOptions)[])
-				.forEach(key => {
+			(['modules', 'extensions'] as (keyof ResolverOptions)[]).forEach(
+				(key) => {
 					if (!userOptions.hasOwnProperty(key)) return;
 
 					const userValues = userOptions[key];
 
 					if (!Array.isArray(userValues)) return;
 
-					options[key] = [
-						...this.values[key],
-						...userValues.filter(isString)
-					];
-				});
+					options[key] = [...this.values[key], ...userValues.filter(isString)];
+				},
+			);
 		}
 
 		this.values = Object.assign(this.values, options);

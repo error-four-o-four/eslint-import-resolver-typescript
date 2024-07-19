@@ -9,15 +9,17 @@ import { ESLint } from 'eslint';
 
 const defaultParams: LintParams = {
 	config: 'eslint.base.js',
-	files: ['**/*.ts']
+	files: ['**/*.ts'],
 };
 
-export async function getLintResult(params = defaultParams): Promise<ESLint.LintResult[]> {
+export async function getLintResult(
+	params = defaultParams,
+): Promise<ESLint.LintResult[]> {
 	console.log('Loading config %o at %o', params.config, process.cwd());
 
 	const eslint = new ESLint({
 		fix: false,
-		overrideConfigFile: params.config
+		overrideConfigFile: params.config,
 	});
 
 	console.log('Linting files %o', params.files);
@@ -25,7 +27,7 @@ export async function getLintResult(params = defaultParams): Promise<ESLint.Lint
 }
 
 export function logLintResult(input: ESLint.LintResult[]) {
-	input.forEach(item => {
+	input.forEach((item) => {
 		const {
 			errorCount,
 			filePath,
@@ -35,20 +37,20 @@ export function logLintResult(input: ESLint.LintResult[]) {
 		console.log(
 			`Eslint found %o error${errorCount !== 1 ? 's' : ''} in %o`,
 			errorCount,
-			filePath
+			filePath,
 		);
 		// console.log(messages, '\n');
 	});
-};
+}
 
 export function logLintResultMessages(input: ESLint.LintResult[]) {
-	input.forEach(item => {
+	input.forEach((item) => {
 		console.log(...item.messages, '\n');
 	});
 }
 
 export type LintParams = {
-	config: string,
+	config: string;
 	files: string[];
 };
 

@@ -5,13 +5,10 @@ import { changeCwdTo } from '@utils/cwd.ts';
 import {
 	getLintResult,
 	logLintResult,
-	logLintResultMessages
+	logLintResultMessages,
 } from './vitest.utils.ts';
 
-import type {
-	LintParams,
-	LintResult
-} from './vitest.utils.ts';
+import type { LintParams, LintResult } from './vitest.utils.ts';
 
 let result: LintResult;
 
@@ -20,7 +17,7 @@ beforeAll(async () => {
 
 	const params: LintParams = {
 		config: './eslint.base.js',
-		files: ['./repo-basic/**/*.ts']
+		files: ['./repo-basic/**/*.ts'],
 	};
 
 	result = await getLintResult(params);

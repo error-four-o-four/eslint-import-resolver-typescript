@@ -38,9 +38,6 @@ const loggers = {
 
 Object.freeze(loggers);
 
-export {
-	name,
-	loggers
-};
+export { name, loggers };
 
 export type LoggerLevel = keyof typeof extended;

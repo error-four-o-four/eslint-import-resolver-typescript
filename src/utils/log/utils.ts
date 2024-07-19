@@ -59,11 +59,8 @@ export function clearOnce(key: string) {
 	loggedOnce.delete(key);
 }
 
-export function logMany(
-	logger: Debugger,
-	args: UnknownArray
-) {
-	args.forEach(item => logger(item));
+export function logMany(logger: Debugger, args: UnknownArray) {
+	args.forEach((item) => logger(item));
 }
 
 // #####

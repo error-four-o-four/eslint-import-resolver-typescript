@@ -18,16 +18,10 @@ import { resolveInternal } from './internal.ts';
 /**
  * @returns an array of absolute and existing file paths
  */
-export function getResolvedPaths(
-	requestor: string,
-	request: string,
-): string[] {
+export function getResolvedPaths(requestor: string, request: string): string[] {
 	const resolved = getMatchedPaths(requestor, request)
-		.map(matchedPath => {
-			loggers.info(
-				'Mapped module path to %o',
-				replaceCwd(matchedPath)
-			);
+		.map((matchedPath) => {
+			loggers.info('Mapped module path to %o', replaceCwd(matchedPath));
 
 			const [message, result] = matchedPath.endsWith(pkgFilename)
 				? resolveExternal(request, matchedPath)
@@ -58,10 +52,7 @@ export function getResolvedPaths(
  * @todo resolve imports
  * @todo resolve internal mono repo packages
  */
-export function getMatchedPaths(
-	requestor: string,
-	request: string,
-): string[] {
+export function getMatchedPaths(requestor: string, request: string): string[] {
 	if (isRelative(request)) {
 		loggers.main('... as a relative module path ...');
 		return [resolve(dirname(requestor), request)];
@@ -70,14 +61,14 @@ export function getMatchedPaths(
 	if (isImports(request)) {
 		loggers.main('... as a hashed module path ...');
 		return [getImportsPath(requestor, request)];
-	};
+	}
 
 	const tsc = getTsconfigHandler().get(requestor);
 
 	let matched = getBaseUrlPath(request, tsc);
 
 	if (matched) {
-		loggers.main('... as a module path relative to \'baseUrl\' ...');
+		loggers.main("... as a module path relative to 'baseUrl' ...");
 		return matched;
 	}
 
@@ -108,16 +99,13 @@ export function getMatchedPaths(
  * @todo
  * @returns
  */
-function getImportsPath(
-	requestor: string,
-	request: string,
-) {
+function getImportsPath(requestor: string, request: string) {
 	/** @todo */
 	// const pkgHandler = getPackageHandler();
 	// resolve imports field
 	// check actual file or package.json module
 	return '@todo';
-};
+}
 
 /**
  *
@@ -126,7 +114,7 @@ function getImportsPath(
  */
 function getBaseUrlPath(
 	request: string,
-	tsc: TscResult | null
+	tsc: TscResult | null,
 ): string[] | null {
 	if (!tsc) return null;
 
@@ -149,11 +137,12 @@ function getBaseUrlPath(
 function getPackagePaths(
 	requestor: string,
 	request: string,
-	tsc: TscResult | null
+	tsc: TscResult | null,
 ): string[] | null {
 	const pkgHandler = getPackageHandler();
 	const baseRequest = request.includes('/')
-		? stripPkgBasePath(request) : request;
+		? stripPkgBasePath(request)
+		: request;
 
 	/** @todo check cache !!! external */
 
@@ -175,20 +164,14 @@ function getPackagePaths(
  * which resolve to internal files. Paths which could be resolved
  * to vendors (`jquery`, `lodash`, `whatever`) are not excluded
  */
-function isMappedInternalPath(
-	request: string,
-	tsc: TscResult | null
-) {
+function isMappedInternalPath(request: string, tsc: TscResult | null) {
 	if (!tsc) return false;
 
 	if (!tsc.parsed.compilerOptions.paths) return false;
 
 	for (const pattern of Object.keys(tsc.parsed.compilerOptions.paths)) {
 		/** @todo confirm conditions */
-		if (
-			pattern.includes('*') &&
-			request.startsWith(pattern.split('*')[0])
-		) {
+		if (pattern.includes('*') && request.startsWith(pattern.split('*')[0])) {
 			return true;
 		}
 	}
@@ -200,10 +183,7 @@ function isMappedInternalPath(
  * Uses tsc path mapper to convert the requested path
  * to a mapped, absolute file path
  */
-function getMappedPaths(
-	request: string,
-	tsc: TscResult | null
-) {
+function getMappedPaths(request: string, tsc: TscResult | null) {
 	if (!tsc) return null;
 
 	const mapped = tsc.mapper && tsc.mapper(request);

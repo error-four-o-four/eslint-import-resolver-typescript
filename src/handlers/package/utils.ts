@@ -14,7 +14,7 @@ import type {
 	ExternalPkgResult,
 	InternalPkgResult,
 	ParsedEntryPoints,
-	ParsedExports
+	ParsedExports,
 } from 'handlers/package/types.ts';
 
 export function getPkgDir(fileOrDir: string) {
@@ -34,21 +34,19 @@ export const parsePkgJson = (path: string) => {
 export function createMatchedDirs(pkgDir: string, sourceFile: string) {
 	const relation = getRelation(sourceFile, pkgDir);
 
-	return (!relation)
+	return !relation
 		? []
 		: relation
-			/** @todo confirm */
-			.split('/')
-			.reduce((all, cur, ind) => {
-				const prev = all[ind - 1] || '';
-				const dir = prev === '' ? cur : `${prev}/${cur}`;
-				return [...all, dir];
-			}, [] as string[]);
+				/** @todo confirm */
+				.split('/')
+				.reduce((all, cur, ind) => {
+					const prev = all[ind - 1] || '';
+					const dir = prev === '' ? cur : `${prev}/${cur}`;
+					return [...all, dir];
+				}, [] as string[]);
 }
 
-export function createInternalPkgJsonResult(
-	pkgDir: string,
-): InternalPkgResult {
+export function createInternalPkgJsonResult(pkgDir: string): InternalPkgResult {
 	const path = join(pkgDir, pkgFilename);
 	const parsed = parsePkgJson(path);
 
@@ -63,9 +61,9 @@ export function createInternalPkgJsonResult(
 		dir: pkgDir,
 		dirs: new Set([]),
 		deps: new Set([
-			...(Object.keys(parsed.dependencies || {})),
-			...(Object.keys(parsed.devDependencies || {})),
-		])
+			...Object.keys(parsed.dependencies || {}),
+			...Object.keys(parsed.devDependencies || {}),
+		]),
 		/** @todo parse imports ! */
 	};
 }
@@ -75,32 +73,34 @@ export function createInternalPkgJsonResult(
 export function stripPkgBasePath(modulePath: string) {
 	const parts = modulePath.split('/');
 
-	return (parts[0].startsWith('@')) ? parts.slice(0, 2).join('/') : parts[0];
+	return parts[0].startsWith('@') ? parts.slice(0, 2).join('/') : parts[0];
 }
 
 export function getPkgPathRequest(
 	pkgName: NonNullable<PackageJson['name']>,
-	modulePath: string
+	modulePath: string,
 ) {
 	// consider that we might be searching in '@types/<modulePath>
-	const base = pkgName.startsWith(prefixTypes) && !modulePath.startsWith(prefixTypes)
-		? stripPkgBasePath(modulePath) : pkgName;
+	const base =
+		pkgName.startsWith(prefixTypes) && !modulePath.startsWith(prefixTypes)
+			? stripPkgBasePath(modulePath)
+			: pkgName;
 
 	return modulePath.replace(base, '.') as keyof ParsedExports;
 }
 
 export function getExternalPaths(
 	pkgName: ReturnType<typeof stripPkgBasePath>,
-	dirs: string[]
+	dirs: string[],
 	// dirs: `${Cwd}/${string}`[]
 ) {
 	const paths = new Set<string>();
 
-	dirs.forEach(dir => {
+	dirs.forEach((dir) => {
 		// prefer '<modules>/@types/<dependency>/package.json'
-		let typedPkgName = (pkgName.startsWith(prefixTypes))
+		let typedPkgName = pkgName.startsWith(prefixTypes)
 			? pkgName
-			: (pkgName.startsWith('@'))
+			: pkgName.startsWith('@')
 				? `${prefixTypes}/${pkgName.substring(1).replace('/', '__')}`
 				: `${prefixTypes}/${pkgName}`;
 
@@ -138,7 +138,7 @@ export function createExternalPkgJsonResult(
 		parsed,
 		path,
 		dir,
-		entryPoints: createEntryPoints(parsed)
+		entryPoints: createEntryPoints(parsed),
 	};
 }
 
@@ -146,17 +146,17 @@ export function createEntryPoints(parsed: PackageJson) {
 	const entryPoints: ParsedEntryPoints = {};
 
 	const exports = parseExportsField(parsed.exports);
-	const types = parsed.types
-		?? parsed.typings
-		?? (exports && findMainTypesCondition(exports['.']));
+	const types =
+		parsed.types ??
+		parsed.typings ??
+		(exports && findMainTypesCondition(exports['.']));
 
 	getOptions()
-		.entryPoints
-		.filter((key): key is Exclude<
-			EntryPoint,
-			'types' | 'typings' | 'exports'
-		> => !['types', 'typings', 'exports'].includes(key))
-		.forEach(key => {
+		.entryPoints.filter(
+			(key): key is Exclude<EntryPoint, 'types' | 'typings' | 'exports'> =>
+				!['types', 'typings', 'exports'].includes(key),
+		)
+		.forEach((key) => {
 			let val = parsed[key];
 
 			if (val && isString(val)) {
@@ -173,8 +173,11 @@ export function createEntryPoints(parsed: PackageJson) {
 	}
 
 	Object.keys(entryPoints)
-		.filter((key): key is keyof Omit<ParsedEntryPoints, 'exports'> => key !== 'exports')
-		.forEach(key => {
+		.filter(
+			(key): key is keyof Omit<ParsedEntryPoints, 'exports'> =>
+				key !== 'exports',
+		)
+		.forEach((key) => {
 			const val = entryPoints[key];
 			if (isString(val) && !isRelative(val)) {
 				entryPoints[key] = `./${val}`;
@@ -196,16 +199,18 @@ function parseExportsField(
 	const conditions = new Set(getOptions().conditions);
 
 	// check conditional mapping
-	const mainKey = Object.keys(field).filter(key => key === '.')[0];
-	const mappedKeys = Object.keys(field).filter(key => key.startsWith('./'));
-	const conditionalKeys = Object.keys(field).filter(key => conditions.has(key));
+	const mainKey = Object.keys(field).filter((key) => key === '.')[0];
+	const mappedKeys = Object.keys(field).filter((key) => key.startsWith('./'));
+	const conditionalKeys = Object.keys(field).filter((key) =>
+		conditions.has(key),
+	);
 	const fallback = {} as ParsedExports;
 
 	// combine conditional keys
 	if (!mainKey) {
 		return {
 			'.': conditionalKeys.reduce(...getKeysReducer(field)),
-			...(!mappedKeys ? fallback : mappedKeys.reduce(...getKeysReducer(field)))
+			...(!mappedKeys ? fallback : mappedKeys.reduce(...getKeysReducer(field))),
 		};
 	}
 
@@ -222,41 +227,39 @@ function parseExportsField(
 			indexCondition++;
 		}
 
-		const mainVals = indexCondition > keys.indexOf(mainKey)
-			? field[mainKey]
-			: conditionalKeys.reduce(...getKeysReducer(field));
+		const mainVals =
+			indexCondition > keys.indexOf(mainKey)
+				? field[mainKey]
+				: conditionalKeys.reduce(...getKeysReducer(field));
 
 		return {
 			// ts complaines when [mainKey] is used
 			'.': mainVals,
-			...(!mappedKeys ? fallback : mappedKeys.reduce(...getKeysReducer(field)))
+			...(!mappedKeys ? fallback : mappedKeys.reduce(...getKeysReducer(field))),
 		};
 	}
 
 	// filter odd ones out
 	return {
 		'.': field[mainKey],
-		...(!mappedKeys ? fallback : mappedKeys.reduce(...getKeysReducer(field)))
+		...(!mappedKeys ? fallback : mappedKeys.reduce(...getKeysReducer(field))),
 	};
 }
 
 function getKeysReducer<T = PackageJson.ExportConditions>(
-	exports: T
-): [
-		(all: Partial<T>, key: keyof T) => Partial<T>,
-		{}
-	] {
+	exports: T,
+): [(all: Partial<T>, key: keyof T) => Partial<T>, {}] {
 	return [
 		(all, key) => ({
 			...all,
-			[key]: exports[key]
+			[key]: exports[key],
 		}),
-		{}
+		{},
 	];
 }
 
 function findMainTypesCondition(
-	mappings: PackageJson.Exports
+	mappings: PackageJson.Exports,
 ): string | undefined {
 	if (!mappings) return;
 

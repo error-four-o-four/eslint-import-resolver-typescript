@@ -4,11 +4,18 @@ import type { PackageJson } from 'type-fest';
 
 import { loggers } from 'utils/log/loggers.ts';
 import { EXT } from 'utils/path/constants.ts';
-import { hasJavascriptExt, hasTypescriptExt, resolve } from 'utils/path/main.ts';
+import {
+	hasJavascriptExt,
+	hasTypescriptExt,
+	resolve,
+} from 'utils/path/main.ts';
 
 import { getPkgPathRequest } from 'handlers/package/utils.ts';
 import { getPackageHandler } from 'handlers/index.ts';
-import type { ExternalPkgResult, ParsedExports } from 'handlers/package/types.ts';
+import type {
+	ExternalPkgResult,
+	ParsedExports,
+} from 'handlers/package/types.ts';
 
 import { resolveWithExtensions } from './utils.ts';
 import type { ResolvedPathResult } from './types.ts';
@@ -19,7 +26,7 @@ import type { ResolvedPathResult } from './types.ts';
  */
 export function resolveExternal(
 	modulePath: string,
-	matchedPath: string
+	matchedPath: string,
 ): ResolvedPathResult {
 	const pkg = getPackageHandler().external[matchedPath];
 	const requestedPath = getPkgPathRequest(pkg.name, modulePath);
@@ -34,7 +41,7 @@ export function resolveExternal(
 	let resolvedPath = getPathFromEntryPoints(
 		requestedPath,
 		pkg.dir,
-		pkg.entryPoints
+		pkg.entryPoints,
 	);
 
 	if (!resolvedPath || !existsSync(resolvedPath)) {
@@ -46,10 +53,12 @@ export function resolveExternal(
 		return [null, resolvedPath];
 	}
 
-	resolvedPath = resolveWithExtensions(
-		resolvedPath.replace(parse(resolvedPath).ext, ''),
-		[EXT.DTS, EXT.MTS, EXT.CTS]
-	) || resolvedPath;
+	resolvedPath =
+		resolveWithExtensions(resolvedPath.replace(parse(resolvedPath).ext, ''), [
+			EXT.DTS,
+			EXT.MTS,
+			EXT.CTS,
+		]) || resolvedPath;
 
 	if (hasJavascriptExt(resolvedPath)) {
 		return ['Could not find declaration file', resolvedPath];
@@ -103,15 +112,11 @@ function findPathInExports(
 		matchedPrefix = requestedPath;
 		result = matchCondition(exports[requestedPath], conditions);
 	} else {
-		[matchedKey, matchedPrefix, data] = matchKey(
-			requestedPath,
-			exports
-		);
+		[matchedKey, matchedPrefix, data] = matchKey(requestedPath, exports);
 
-		result = (
-			matchedKey &&
-			matchCondition(exports[matchedKey], conditions, data)
-		) ?? null;
+		result =
+			(matchedKey && matchCondition(exports[matchedKey], conditions, data)) ??
+			null;
 	}
 
 	if (!result) return null;
@@ -133,7 +138,7 @@ function findPathInExports(
 function matchCondition(
 	exports: PackageJson.Exports | undefined,
 	conditions: string[],
-	data?: string[]
+	data?: string[],
 ): string | null {
 	if (!exports) {
 		return null;
@@ -155,7 +160,7 @@ function matchCondition(
 				return null;
 			}
 
-			result += (nextIsStar ? (data[j++] || '') : exports[i]);
+			result += nextIsStar ? data[j++] || '' : exports[i];
 		}
 
 		return result;
@@ -182,11 +187,7 @@ function matchCondition(
 function matchKey(
 	requestedPath: keyof ParsedExports,
 	exports: ParsedExports,
-): readonly [
-	keyof ParsedExports | undefined,
-	string | undefined,
-	string[]
-] {
+): readonly [keyof ParsedExports | undefined, string | undefined, string[]] {
 	const keys = Object.keys(exports).sort((a, b) => b.length - a.length);
 	const data = [];
 	const pathLen = requestedPath.length;
@@ -210,7 +211,7 @@ function matchKey(
 
 				if (next === '*') break;
 
-				const nextPathIdx = (!next)
+				const nextPathIdx = !next
 					? pathLen
 					: requestedPath.indexOf(next, pathIdx + 1);
 
@@ -224,10 +225,7 @@ function matchKey(
 			}
 		}
 
-		if (
-			keyIdx < key.length ||
-			(pathIdx < pathLen && !key.endsWith('/'))
-		) {
+		if (keyIdx < key.length || (pathIdx < pathLen && !key.endsWith('/'))) {
 			// reset data for next iteration
 			data.length = 0;
 		} else {

@@ -22,14 +22,9 @@ export type ExternalPkgResult = BasePkgResult & {
 
 export type ParsedEntryPoints = Partial<{
 	[K in Exclude<EntryPoint, 'typings'>]: K extends 'exports'
-	? ParsedExports
-	: string
+		? ParsedExports
+		: string;
 }>;
 
-export type ParsedExports = Record<
-	`.`,
-	PackageJson.Exports
-> & Partial<Record<
-	`./${string}`,
-	PackageJson.Exports
->>;
+export type ParsedExports = Record<`.`, PackageJson.Exports> &
+	Partial<Record<`./${string}`, PackageJson.Exports>>;

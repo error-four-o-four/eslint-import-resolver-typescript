@@ -15,19 +15,10 @@ export type InternalOptions = SetRequired<
 	conditions: (keyof PackageJson.ExportConditions)[];
 };
 
-export type EntryPoint = keyof Pick<
-	PackageJson.PackageJsonStandard,
-	| 'main'
-	| 'exports'
-	| 'bin'
-> | keyof Pick<
-	PackageJson.TypeScriptConfiguration,
-	| 'types'
-	| 'typings'
-> | keyof Pick<
-	PackageJson.NonStandardEntryPoints,
-	| 'module'
-	| 'browser'
-	| 'esnext'
-	| 'sideEffects'
->;
+export type EntryPoint =
+	| keyof Pick<PackageJson.PackageJsonStandard, 'main' | 'exports' | 'bin'>
+	| keyof Pick<PackageJson.TypeScriptConfiguration, 'types' | 'typings'>
+	| keyof Pick<
+			PackageJson.NonStandardEntryPoints,
+			'module' | 'browser' | 'esnext' | 'sideEffects'
+	  >;

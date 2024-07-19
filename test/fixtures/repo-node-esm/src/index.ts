@@ -1,4 +1,4 @@
-import fooTs from "./foo-ts.jsx";
+import fooTs from './foo-ts.jsx';
 
 console.log(fooTs());
 

@@ -3,7 +3,7 @@ import type { TsConfigJson } from 'type-fest';
 
 import { EXT } from 'utils/path/constants.ts';
 import { isDirectory } from 'utils/path/file.ts';
-import { hasDeclaration, hasTypescriptExt, } from 'utils/path/main.ts';
+import { hasDeclaration, hasTypescriptExt } from 'utils/path/main.ts';
 import type { FileExtension } from 'utils/path/types.ts';
 
 import { getTsconfigHandler } from 'handlers/index.ts';
@@ -18,7 +18,7 @@ import type { ResolvedPathResult } from './types.ts';
  */
 export function resolveInternal(
 	requestor: string,
-	request: string
+	request: string,
 ): ResolvedPathResult {
 	const tsc = getTsconfigHandler().get(requestor);
 	const [ext, exts] = matchExtensions(request, tsc);
@@ -53,14 +53,17 @@ export function resolveInternal(
 
 function matchExtensions(
 	request: string,
-	tsc: TscResult | null
+	tsc: TscResult | null,
 ): [null | FileExtension, FileExtension[]] {
 	let { base, ext } = parse(request);
 
 	const hasExt = narrowExtension(ext);
 
 	if (tsc && !hasExt) {
-		return [null, getUnknownExtensionsWithCompilerOptions(base, tsc.parsed.compilerOptions)];
+		return [
+			null,
+			getUnknownExtensionsWithCompilerOptions(base, tsc.parsed.compilerOptions),
+		];
 	}
 
 	if (hasExt) {
@@ -72,7 +75,6 @@ function matchExtensions(
 	return [null, Object.values(EXT)];
 }
 
-
 // function requiresExtension({ moduleResolution }: TsConfigJson.CompilerOptions) {
 // 	return moduleResolution === 'node16' || moduleResolution === 'nodenext';
 // };
@@ -83,7 +85,7 @@ function matchExtensions(
 
 function getUnknownExtensionsWithCompilerOptions(
 	base: string,
-	compilerOptions: TsConfigJson.CompilerOptions
+	compilerOptions: TsConfigJson.CompilerOptions,
 ): FileExtension[] {
 	const exts: FileExtension[] = [EXT.TS, EXT.MTS, EXT.CTS];
 

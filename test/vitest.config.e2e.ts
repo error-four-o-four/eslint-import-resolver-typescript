@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vitest/config';
 
 import common from './vitest.common.ts';
@@ -10,9 +9,9 @@ export default defineConfig({
 		...common.test,
 		pool: 'forks',
 		poolOptions: {
-			forks: {}
+			forks: {},
 		},
 		include: ['test/e2e/**/*.test.ts'],
 	},
-	plugins: common.plugins
+	plugins: common.plugins,
 });

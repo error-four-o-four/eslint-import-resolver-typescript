@@ -11,14 +11,14 @@ export const stripBOM = (str: string) => str.replace(/^\uFEFF/, '');
 // @see https://github.com/un-ts/eslint-plugin-import-x/blob/master/src/utils/pkg-up.ts
 export function findFirstUp(
 	name: string | string[],
-	dir = process.cwd()
+	dir = process.cwd(),
 ): string | null {
 	const root = parse(dir).root;
 	const names = [name].flat();
 
 	while (true) {
-		const paths = names.map(item => resolve(dir, item));
-		const path = paths.find(item => existsSync(item));
+		const paths = names.map((item) => resolve(dir, item));
+		const path = paths.find((item) => existsSync(item));
 
 		if (path) {
 			return slash(path);
@@ -36,7 +36,7 @@ export function findFirstUp(
 
 export function findAllUp(
 	name: string | string[],
-	dirOrFile: string
+	dirOrFile: string,
 ): string[] | null {
 	const stop = getSlashedCwd();
 	const names = [name].flat();
@@ -46,9 +46,9 @@ export function findAllUp(
 
 	while (true) {
 		names
-			.map(item => resolve(dir, item))
-			.filter(item => existsSync(item))
-			.forEach(item => matched.add(item));
+			.map((item) => resolve(dir, item))
+			.filter((item) => existsSync(item))
+			.forEach((item) => matched.add(item));
 
 		if (dir === stop) {
 			break;
@@ -62,15 +62,13 @@ export function findAllUp(
 		loggers.warn('Could not find any of %o', names);
 	}
 
-	return matched.size > 0
-		? [...matched].map(slash)
-		: null;
+	return matched.size > 0 ? [...matched].map(slash) : null;
 }
 
 export function isDirectory(path: string) {
 	try {
 		return statSync(path, { throwIfNoEntry: false })?.isDirectory() ?? false;
-	} catch { }
+	} catch {}
 
 	return false;
 }

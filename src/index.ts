@@ -29,39 +29,41 @@ export function resolve(
 	loggers.main(
 		'Attempting to resolve %o ...\n... in source file %o ...',
 		modulePath,
-		replaceCwd(sourceFile)
+		replaceCwd(sourceFile),
 	);
 
 	if (isCoreModule(request)) {
-		loggers.main(`... ${colors.yellow('resolved')} module path as a core module`);
+		loggers.main(
+			`... ${colors.yellow('resolved')} module path as a core module`,
+		);
 
 		return {
 			found: true,
-			path: null
+			path: null,
 		};
 	}
 
 	applyUserOptions(userOptions);
 
 	const paths = getResolvedPaths(sourceFile, request);
-	const path = paths.find(item => hasTypescriptExt(item)) ?? paths[0];
+	const path = paths.find((item) => hasTypescriptExt(item)) ?? paths[0];
 
 	if (path) {
 		loggers.main(
 			`... ${colors.yellow('resolved')} module path to %o`,
-			replaceCwd(path)
+			replaceCwd(path),
 		);
 
 		return {
 			found: true,
-			path
+			path,
 		};
 	}
 
 	loggers.main(`... could ${colors.yellow('not')} resolve module path`);
 
 	return {
-		found: false
+		found: false,
 	};
 }
 
@@ -72,10 +74,6 @@ export type {
 	ResultNotFound,
 } from './core/types.ts';
 
-export type {
-	ResolverOptions
-} from './handlers/options/types.ts';
+export type { ResolverOptions } from './handlers/options/types.ts';
 
-export type {
-	FileExtension
-} from './utils/path/types.ts';
+export type { FileExtension } from './utils/path/types.ts';

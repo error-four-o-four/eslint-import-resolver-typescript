@@ -10,6 +10,6 @@ export const cwdHandler: {
 
 		if (this.cached === cwd) return cwd;
 
-		return this.cached = cwd;
-	}
+		return (this.cached = cwd);
+	},
 };

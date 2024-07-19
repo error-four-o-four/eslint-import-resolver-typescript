@@ -1,7 +1,8 @@
 const escapeCode = '\u001B';
 const colorEscapeCode = escapeCode + '[3';
 
-const toColorCode = (c: number) => colorEscapeCode + (c < 8 ? c : '8;5;' + c) + ';1m';
+const toColorCode = (c: number) =>
+	colorEscapeCode + (c < 8 ? c : '8;5;' + c) + ';1m';
 
 const colorCodesMap = {
 	// dark blue
@@ -19,9 +20,7 @@ const colorCodesMap = {
 } as const;
 
 const mappedColorCodes = Object.fromEntries(
-	Object.entries(
-		colorCodesMap
-	).map(([key, clr]) => [key, toColorCode(clr)])
+	Object.entries(colorCodesMap).map(([key, clr]) => [key, toColorCode(clr)]),
 ) as Readonly<Record<keyof typeof colorCodesMap, string>>;
 
 const cc = {
@@ -37,7 +36,7 @@ const cc = {
 
 const supported = process.env.COLORTERM === 'truecolor';
 
-const clr = (c: string, s: string) => supported ? `${c}${s}${cc.off}` : s;
+const clr = (c: string, s: string) => (supported ? `${c}${s}${cc.off}` : s);
 
 const colors = {
 	red(s: string) {
@@ -72,7 +71,4 @@ const colors = {
 	},
 } as const;
 
-export {
-	cc as colorCodes,
-	colors
-};
+export { cc as colorCodes, colors };

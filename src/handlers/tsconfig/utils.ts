@@ -15,45 +15,44 @@ export function getTscDir(fileOrDir: string) {
 }
 
 export function createTscWithCompilerOptions(
-	config: TsConfigResult['config']
+	config: TsConfigResult['config'],
 ): TscResult['parsed'] {
 	/** @todo refactor */
 	const { compilerOptions } = config;
 
 	/** https://www.typescriptlang.org/tsconfig/#target */
-	const tscTarget = (
-		compilerOptions?.target?.toLowerCase() ?? 'ES3'
-	) as Lowercase<TsConfigJson.CompilerOptions.Target>;
+	const tscTarget = (compilerOptions?.target?.toLowerCase() ??
+		'ES3') as Lowercase<TsConfigJson.CompilerOptions.Target>;
 
 	/** https://www.typescriptlang.org/tsconfig/#module */
-	const tscModule = (
-		compilerOptions?.module?.toLowerCase() ??
-		((tscTarget === 'es3' || tscTarget === 'es5') ? 'commonjs' : 'es2015')
-	) as Lowercase<TsConfigJson.CompilerOptions.Module>;
+	const tscModule = (compilerOptions?.module?.toLowerCase() ??
+		(tscTarget === 'es3' || tscTarget === 'es5'
+			? 'commonjs'
+			: 'es2015')) as Lowercase<TsConfigJson.CompilerOptions.Module>;
 
 	/** https://www.typescriptlang.org/tsconfig/#moduleResolution */
-	const tscResolution = (
-		compilerOptions?.moduleResolution?.toLowerCase() ?? (
-			isClassicModuleResolution(tscModule)
-				? 'classic'
-				: isNodeModuleResolution(tscModule)
-					? tscModule.toLowerCase()
-					: 'node'
-		)
-	) as Lowercase<TsConfigJson.CompilerOptions.ModuleResolution>;
+	const tscResolution = (compilerOptions?.moduleResolution?.toLowerCase() ??
+		(isClassicModuleResolution(tscModule)
+			? 'classic'
+			: isNodeModuleResolution(tscModule)
+				? tscModule.toLowerCase()
+				: 'node')) as Lowercase<TsConfigJson.CompilerOptions.ModuleResolution>;
 
-	const allowImportingTsExtensions = (
+	const allowImportingTsExtensions =
 		tscResolution === 'bundler' ||
 		compilerOptions?.noEmit === true ||
 		compilerOptions?.emitDeclarationOnly === true
-	) ? compilerOptions?.allowImportingTsExtensions : false;
+			? compilerOptions?.allowImportingTsExtensions
+			: false;
 
-	const paths = compilerOptions?.paths && typeof compilerOptions.paths === 'object'
-		? compilerOptions.paths : undefined;
+	const paths =
+		compilerOptions?.paths && typeof compilerOptions.paths === 'object'
+			? compilerOptions.paths
+			: undefined;
 
 	if (['classic', 'node', 'node10'].includes(tscResolution)) {
 		/** @todo */
-		loggers.warn('Don\'t!');
+		loggers.warn("Don't!");
 	}
 
 	config.compilerOptions = {
@@ -62,18 +61,17 @@ export function createTscWithCompilerOptions(
 		module: tscModule,
 		moduleResolution: tscResolution,
 		allowImportingTsExtensions,
-		paths
+		paths,
 	};
 
 	return config as TscResult['parsed'];
 }
 
 function isClassicModuleResolution(
-	tscModule: TsConfigJson.CompilerOptions.Module
+	tscModule: TsConfigJson.CompilerOptions.Module,
 ) {
-	const lowercase = (
-		tscModule.toLowerCase() as Lowercase<TsConfigJson.CompilerOptions.Module>
-	);
+	const lowercase =
+		tscModule.toLowerCase() as Lowercase<TsConfigJson.CompilerOptions.Module>;
 
 	return (
 		lowercase === 'amd' ||
@@ -85,11 +83,10 @@ function isClassicModuleResolution(
 }
 
 function isNodeModuleResolution(
-	tscModule: TsConfigJson.CompilerOptions.Module
+	tscModule: TsConfigJson.CompilerOptions.Module,
 ) {
-	const lowercase = (
-		tscModule.toLowerCase() as Lowercase<TsConfigJson.CompilerOptions.Module>
-	);
+	const lowercase =
+		tscModule.toLowerCase() as Lowercase<TsConfigJson.CompilerOptions.Module>;
 
 	return lowercase === 'node16' || lowercase === 'nodenext';
 }

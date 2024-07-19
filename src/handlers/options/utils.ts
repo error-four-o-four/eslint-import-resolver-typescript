@@ -1,8 +1,6 @@
 import type { InternalOptions } from 'handlers/options/types.ts';
 
-const modules: InternalOptions['modules'] = [
-	'node_modules'
-];
+const modules: InternalOptions['modules'] = ['node_modules'];
 
 // @see https://nodejs.org/api/packages.html#package-entry-points
 export const entryPoints: InternalOptions['entryPoints'] = [
@@ -16,7 +14,6 @@ export const entryPoints: InternalOptions['entryPoints'] = [
 	'esnext',
 	'bin',
 ];
-
 
 // @see https://nodejs.org/api/packages.html#community-conditions-definitions
 export const conditions: InternalOptions['conditions'] = [
@@ -35,5 +32,5 @@ export const defaults: InternalOptions = {
 	modules,
 	entryPoints,
 	conditions,
-	extensions: []
+	extensions: [],
 };
