@@ -3,7 +3,7 @@ import debug from 'debug';
 import type { Debugger } from 'debug';
 import type { UnknownArray } from 'type-fest';
 
-import { getSlashedCwd, hasWinRoot } from '../path/main.ts';
+import { getSlashedCwd, hasWinRoot } from 'utils/path/main.ts';
 import { name } from './loggers.ts';
 // import { LoggerLevel, loggers, name } from './loggers.ts';
 

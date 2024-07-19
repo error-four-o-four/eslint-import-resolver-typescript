@@ -2,8 +2,8 @@ import { existsSync, statSync } from 'node:fs';
 import { dirname, parse, resolve } from 'node:path';
 import slash from 'slash';
 
-import { loggers } from '../log/loggers.ts';
-import { replaceCwd } from '../log/utils.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { replaceCwd } from 'utils/log/utils.ts';
 import { getDirname, getSlashedCwd } from './main.ts';
 
 export const stripBOM = (str: string) => str.replace(/^\uFEFF/, '');

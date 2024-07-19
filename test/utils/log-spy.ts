@@ -3,7 +3,8 @@ import { afterAll, beforeAll, vi } from 'vitest';
 import { loggers } from 'utils/log/loggers.ts';
 import { enable, disable } from 'utils/log/utils.ts';
 
-const spy = vi.spyOn(loggers, 'main').mockImplementation(() => { /* void */ });
+const spy = vi.spyOn(loggers, 'main');
+// .mockImplementation(() => { /* void */ });
 
 const enableLoggerBeforeAll = () => {
 	beforeAll(() => {

@@ -6,13 +6,13 @@ import {
 	parseTsconfig
 } from 'get-tsconfig';
 
-import { loggers } from '../../utils/log/loggers.ts';
-import { colors } from '../../utils/log/colors.ts';
-import { replaceCwd } from '../../utils/log/utils.ts';
-import { tscFilename } from '../../utils/path/constants.ts';
-import * as utils from './utils.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { colors } from 'utils/log/colors.ts';
+import { replaceCwd } from 'utils/log/utils.ts';
+import { tscFilename } from 'utils/path/constants.ts';
+import type { Cwd } from 'utils/path/types.ts';
 
-import type { Cwd } from '../../utils/path/types.ts';
+import * as utils from './utils.ts';
 import type {
 	GetTsconfigResult,
 	TscFileMatcher,

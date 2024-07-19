@@ -1,18 +1,19 @@
 import { dirname } from 'node:path';
 import { existsSync } from 'node:fs';
 
-import { loggers } from '../utils/log/loggers.ts';
-import { replaceCwd } from '../utils/log/utils.ts';
-import { isString } from '../utils/assert.ts';
-import { pkgFilename } from '../utils/path/constants.ts';
-import { isImports, isRelative, resolve } from '../utils/path/main.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { replaceCwd } from 'utils/log/utils.ts';
+import { isString } from 'utils/assert.ts';
+import { pkgFilename } from 'utils/path/constants.ts';
+import { isImports, isRelative, resolve } from 'utils/path/main.ts';
+
 /** @todo use pkg conditional-exports.parse */
-import { stripPkgBasePath } from '../handlers/package/utils.ts';
-import { getPackageHandler, getTsconfigHandler } from '../handlers/index.ts';
+import { getPackageHandler, getTsconfigHandler } from 'handlers/index.ts';
+import { stripPkgBasePath } from 'handlers/package/utils.ts';
+import type { TscResult } from 'handlers/tsconfig/types.ts';
+
 import { resolveExternal } from './external.ts';
 import { resolveInternal } from './internal.ts';
-
-import type { TscResult } from '../handlers/tsconfig/types.ts';
 
 /**
  * @returns an array of absolute and existing file paths

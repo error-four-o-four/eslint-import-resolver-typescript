@@ -2,14 +2,15 @@ import { parse } from 'node:path';
 import { existsSync } from 'node:fs';
 import type { PackageJson } from 'type-fest';
 
-import { loggers } from '../utils/log/loggers.ts';
-import { EXT } from '../utils/path/constants.ts';
-import { hasJavascriptExt, hasTypescriptExt, resolve } from '../utils/path/main.ts';
-import { getPkgPathRequest } from '../handlers/package/utils.ts';
-import { getPackageHandler } from '../handlers/index.ts';
-import { resolveWithExtensions } from './utils.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { EXT } from 'utils/path/constants.ts';
+import { hasJavascriptExt, hasTypescriptExt, resolve } from 'utils/path/main.ts';
 
-import type { ExternalPkgResult, ParsedExports } from '../handlers/package/types.ts';
+import { getPkgPathRequest } from 'handlers/package/utils.ts';
+import { getPackageHandler } from 'handlers/index.ts';
+import type { ExternalPkgResult, ParsedExports } from 'handlers/package/types.ts';
+
+import { resolveWithExtensions } from './utils.ts';
 import type { ResolvedPathResult } from './types.ts';
 
 /**

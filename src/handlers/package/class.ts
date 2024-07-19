@@ -1,16 +1,18 @@
 import { existsSync } from 'node:fs';
 import { dirname } from 'node:path';
 
-import { loggers } from '../../utils/log/loggers.ts';
-import { clearOnce, logOnce, replaceCwd } from '../../utils/log/utils.ts';
-import { colors } from '../../utils/log/colors.ts';
-import { findAllUp } from '../../utils/path/file.ts';
-import { getRelation, resolve } from '../../utils/path/main.ts';
-import { pkgFilename } from '../../utils/path/constants.ts';
-import { getOptionsHandler } from '../../handlers/index.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { clearOnce, logOnce, replaceCwd } from 'utils/log/utils.ts';
+import { colors } from 'utils/log/colors.ts';
+import { findAllUp } from 'utils/path/file.ts';
+import { getRelation, resolve } from 'utils/path/main.ts';
+import { pkgFilename } from 'utils/path/constants.ts';
+import type { Cwd } from 'utils/path/types.ts';
+
+import { getOptions } from 'handlers/options/index.ts';
+import type { ExternalPkgResult, InternalPkgResult } from 'handlers/package/types.ts';
+
 import * as utils from './utils.ts';
-import type { ExternalPkgResult, InternalPkgResult } from '../../handlers/package/types.ts';
-import type { Cwd } from '../../utils/path/types.ts';
 
 export class PackageHandler {
 	constructor(cwd: Cwd) {
@@ -147,13 +149,13 @@ export class PackageHandler {
 		request: string,
 	): string[] | null {
 		if (!this.current) {
+			/** @todo */
 			// this should never be the case
 			// throw new Error('Nope!');
 			return null;
 		}
 
-		// search for '<modules>'
-		const modules = getOptionsHandler().modules;
+		const { modules } = getOptions();
 		const dirs = findAllUp(modules, this.current.dir);
 
 

@@ -1,5 +1,5 @@
 import type { PackageJson, SetRequired } from 'type-fest';
-import type { FileExtension } from '../../utils/path/types.ts';
+import type { FileExtension } from 'utils/path/types.ts';
 
 export type ResolverOptions = {
 	modules?: string[];

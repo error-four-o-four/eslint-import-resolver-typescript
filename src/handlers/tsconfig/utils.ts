@@ -2,11 +2,11 @@ import { dirname } from 'node:path';
 import type { TsConfigJson } from 'type-fest';
 import type { TsConfigResult } from 'get-tsconfig';
 
-import { loggers } from '../../utils/log/loggers.ts';
-import { tscFilename } from '../../utils/path/constants.ts';
-import { findFirstUp } from '../../utils/path/file.ts';
-import { getDirname } from '../../utils/path/main.ts';
-import type { TscResult } from '../../handlers/tsconfig/types.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { tscFilename } from 'utils/path/constants.ts';
+import { findFirstUp } from 'utils/path/file.ts';
+import { getDirname } from 'utils/path/main.ts';
+import type { TscResult } from 'handlers/tsconfig/types.ts';
 
 export function getTscDir(fileOrDir: string) {
 	const dir = getDirname(fileOrDir);

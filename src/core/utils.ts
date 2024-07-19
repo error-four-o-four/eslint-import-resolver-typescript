@@ -1,8 +1,8 @@
 import { existsSync } from 'node:fs';
 
-import { colors } from '../utils/log/colors.ts';
-import { loggers } from '../utils/log/loggers.ts';
-import type { FileExtension } from '../utils/path/types.ts';
+import { colors } from 'utils/log/colors.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import type { FileExtension } from 'utils/path/types.ts';
 
 export function narrowExtension(ext: string): ext is FileExtension {
 	return Boolean(ext) && ext.startsWith('.');

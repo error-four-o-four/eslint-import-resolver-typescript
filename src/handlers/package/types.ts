@@ -1,5 +1,5 @@
 import type { PackageJson } from 'type-fest';
-import type { EntryPoint } from '../../handlers/options/types.ts';
+import type { EntryPoint } from 'handlers/options/types.ts';
 
 type BasePkgResult = {
 	parsed: PackageJson;

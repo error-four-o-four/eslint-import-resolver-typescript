@@ -1,25 +1,37 @@
 {
-	// https://github.com/privatenumber/pkgroll/issues/36
-	// we can't pass a specific 'tsconfig' to pkgroll
-	// this one has to be used to bundle and build
-	"extends": "./tsconfig.base.json",
+	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
+		"lib": ["es2023"],
+    "target": "es2022",
 		"module": "NodeNext",
+
+		"strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+		"resolveJsonModule": true,
+
+		"allowImportingTsExtensions": true,
+		"importHelpers": true,
 
 		"noEmit": true,
 		"emitDeclarationOnly": false,
-		"allowImportingTsExtensions": true,
 
-		// pkgroll seems unable to handle bare module specifiers
 		"baseUrl": "./src",
-		// https://github.com/privatenumber/pkgroll/issues/48
-		// "paths": { }
+		"paths": {
+			"@e2e/*": ["../test/e2e/*"],
+			"@unit/*": ["../test/unit/*"],
+			"@utils/*": ["../test/utils/*"],
+		},
+		"types": ["node", "vitest"],
 	},
-	"include": ["src/**/*.ts"],
+	"include": [
+		"src/**/*.ts",
+		"test/**/*.ts",
+	],
 	"exclude": [
 		"node_modules",
 		"**/node_modules",
-		"test",
-		"dist"
+		"dist",
+		"test/fixtures"
 	],
 }

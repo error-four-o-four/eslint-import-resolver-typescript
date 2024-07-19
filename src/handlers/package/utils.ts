@@ -3,19 +3,19 @@ import { join } from 'node:path/posix';
 import { existsSync, readFileSync } from 'node:fs';
 import type { PackageJson } from 'type-fest';
 
-import { isString, isUnknownRecord } from '../../utils/assert.ts';
-import { pkgFilename, prefixTypes } from '../../utils/path/constants.ts';
-import { findFirstUp, stripBOM } from '../../utils/path/file.ts';
-import { getDirname, getRelation, isRelative } from '../../utils/path/main.ts';
-import { getOptionsHandler } from '../../handlers/index.ts';
+import { isString, isUnknownRecord } from 'utils/assert.ts';
+import { pkgFilename, prefixTypes } from 'utils/path/constants.ts';
+import { findFirstUp, stripBOM } from 'utils/path/file.ts';
+import { getDirname, getRelation, isRelative } from 'utils/path/main.ts';
 
+import { getOptions } from 'handlers/options/index.ts';
+import type { EntryPoint } from 'handlers/options/types.ts';
 import type {
 	ExternalPkgResult,
 	InternalPkgResult,
 	ParsedEntryPoints,
 	ParsedExports
-} from '../../handlers/package/types.ts';
-import type { EntryPoint } from '../../handlers/options/types.ts';
+} from 'handlers/package/types.ts';
 
 export function getPkgDir(fileOrDir: string) {
 	const dir = getDirname(fileOrDir);
@@ -150,7 +150,7 @@ export function createEntryPoints(parsed: PackageJson) {
 		?? parsed.typings
 		?? (exports && findMainTypesCondition(exports['.']));
 
-	getOptionsHandler()
+	getOptions()
 		.entryPoints
 		.filter((key): key is Exclude<
 			EntryPoint,
@@ -193,7 +193,7 @@ function parseExportsField(
 		return { '.': field };
 	}
 
-	const conditions = new Set(getOptionsHandler().conditions);
+	const conditions = new Set(getOptions().conditions);
 
 	// check conditional mapping
 	const mainKey = Object.keys(field).filter(key => key === '.')[0];

@@ -1,4 +1,4 @@
-import type { InternalOptions } from '../../handlers/options/types.ts';
+import type { InternalOptions } from 'handlers/options/types.ts';
 
 const modules: InternalOptions['modules'] = [
 	'node_modules'

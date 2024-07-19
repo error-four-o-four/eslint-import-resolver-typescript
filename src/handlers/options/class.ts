@@ -1,7 +1,8 @@
-import { isString, isUnknownRecord } from '../../utils/assert.ts';
+import { isString, isUnknownRecord } from 'utils/assert.ts';
+import type { Cwd } from 'utils/path/types.ts';
+import type { InternalOptions, ResolverOptions } from 'handlers/options/types.ts';
+
 import { defaults } from './utils.ts';
-import type { Cwd } from '../../utils/path/types.ts';
-import type { InternalOptions, ResolverOptions } from '../../handlers/options/types.ts';
 
 export class OptionsHandler {
 	public cwd: Cwd;
@@ -17,20 +18,9 @@ export class OptionsHandler {
 		this.values = { ...defaults };
 	}
 
-	get modules() {
-		return this.values.modules;
-	}
-
-	get entryPoints() {
-		return this.values.entryPoints;
-	}
-
-	get conditions() {
-		return this.values.conditions;
-	}
-
 	public apply(userOptions: unknown) {
 		/** @todo loosely typed */
+		/** @todo read custom conditions from tsconfig */
 		const options: Record<string, any> = {};
 
 		if (isUnknownRecord(userOptions)) {

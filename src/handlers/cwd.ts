@@ -1,4 +1,4 @@
-import { getSlashedCwd } from '../utils/path/main.ts';
+import { getSlashedCwd } from 'utils/path/main.ts';
 
 export const cwdHandler: {
 	cached: null | string;

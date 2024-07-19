@@ -1,14 +1,15 @@
 import isCoreModule from 'is-core-module';
 
-import { loggers } from './utils/log/loggers.ts';
-import { replaceCwd } from './utils/log/utils.ts';
-import { colors } from './utils/log/colors.ts';
-import { hasTypescriptExt, removeAfter } from './utils/path/main.ts';
+import { loggers } from 'utils/log/loggers.ts';
+import { replaceCwd } from 'utils/log/utils.ts';
+import { colors } from 'utils/log/colors.ts';
+import { hasTypescriptExt, removeAfter } from 'utils/path/main.ts';
 
-import { applyUserOptions } from './handlers/index.ts';
-import { getResolvedPaths } from './core/index.ts';
-import type { ResolverOptions } from './handlers/options/types.ts';
-import type { ResolvedResult } from './core/types.ts';
+import { applyUserOptions } from 'handlers/options/index.ts';
+import type { ResolverOptions } from 'handlers/options/types.ts';
+
+import { getResolvedPaths } from 'core/index.ts';
+import type { ResolvedResult } from 'core/types.ts';
 
 export const interfaceVersion = 2;
 

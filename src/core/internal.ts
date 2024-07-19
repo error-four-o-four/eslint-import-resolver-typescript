@@ -1,14 +1,15 @@
 import { parse } from 'node:path';
 import type { TsConfigJson } from 'type-fest';
 
-import { EXT } from '../utils/path/constants.ts';
-import { isDirectory } from '../utils/path/file.ts';
-import { hasDeclaration, hasTypescriptExt, } from '../utils/path/main.ts';
-import { getTsconfigHandler } from '../handlers/index.ts';
-import { narrowExtension, resolveWithExtensions } from './utils.ts';
+import { EXT } from 'utils/path/constants.ts';
+import { isDirectory } from 'utils/path/file.ts';
+import { hasDeclaration, hasTypescriptExt, } from 'utils/path/main.ts';
+import type { FileExtension } from 'utils/path/types.ts';
 
-import type { FileExtension } from '../utils/path/types.ts';
-import type { TscResult } from '../handlers/tsconfig/types.ts';
+import { getTsconfigHandler } from 'handlers/index.ts';
+import type { TscResult } from 'handlers/tsconfig/types.ts';
+
+import { narrowExtension, resolveWithExtensions } from './utils.ts';
 import type { ResolvedPathResult } from './types.ts';
 
 /**
